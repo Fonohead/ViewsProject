@@ -1,4 +1,4 @@
-from django.views.generic import ListView
+from django.views.generic import ListView, DetailView
 from .models import Product
 
 class ProductsList(ListView):
@@ -6,5 +6,11 @@ class ProductsList(ListView):
     ordering = 'name'
     template_name = 'flatpages/products.html'
     context_object_name = 'products'
+
+class ProductDetail(DetailView):
+    model = Product
+    template_name = 'flatpages/product.html'
+    context_object_name = 'product'
+
     
 
