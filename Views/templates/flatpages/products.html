@@ -10,8 +10,13 @@ Products
 
 {% block content %}
     <h1>Все товары</h1>
+    <form action="" method="get">
+       {{ filterset.form.as_p }}
+       <input type="submit" value="Найти" />
+    </form>
     <h3>{% current_time "%d %b %Y" %}</h3>
     <h3>{{ next_sale|default_if_none:"Позже сообщим о распродаже" }}</h3>
+
 
     <hr>
     {% if products %}
@@ -37,7 +42,29 @@ Products
 
        </table>
     </div>
-   {% else %}
-       <h2>Товаров нет!</h2>
-   {% endif %}
+    {% else %}
+        <h2>Товаров нет!</h2>
+    {% endif %}
+
+    {# Previous page #}
+    {% if page_obj.has_previous %}
+        <a href="?{% url_replace page=1 %}">1</a>
+        {% if page_obj.previous_page_number != 1 %}
+            <a href="?{% url_replace page=page_obj.previous_page_number %}">
+                {{ page_obj.previous_page_number }}</a>
+        {% endif %}
+    {% endif %}
+
+    {# Current page #}
+    {{ page_obj.number }}
+
+    {# Next page #}
+    {% if page_obj.has_next %}
+        <a href="?{% url_replace page=page_obj.next_page_number %}">
+            {{ page_obj.next_page_number}}</a>
+        {% if page_obj.next_page_number != page_obj.paginator.next_page_number %}
+            <a href="?{% url_replace page=page_obj.paginator.next_page_number %}">
+                {{ page_obj.paginator.next_page_number }}</a>
+        {% endif %}
+    {% endif %}
 {% endblock content %}

@@ -13,7 +13,7 @@ def currency(value, code='rub'):
     return f'{value} {postfix}'
 
 
-bad_words = ['kaka', 'buka', 'sraka', 'стильная', 'зимнее']
+bad_words = []
 
 @register.filter()
 def censor(text):
